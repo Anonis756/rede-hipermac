@@ -1,0 +1,329 @@
+        /* === ESTILOS GERAIS === */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        header,
+        footer {
+            background-color: rgb(4, 4, 99);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header {
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        footer {
+            font-size: 0.95rem;
+            margin-top: 30px;
+        }
+
+        /* === TÍTULOS === */
+        h1,
+        h2 {
+            text-align: center;
+            margin: 1.5rem 0;
+            font-weight: 800;
+            font-size: 1.8rem;
+        }
+
+        .red {
+            color: #e53935;
+        }
+
+        .blue {
+            color: #1e88e5;
+        }
+
+        /* === LAYOUT PRINCIPAL === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .main {
+            flex: 1;
+            min-width: 350px;
+            background-color: #1e88e5;
+            color: white;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .sidebar {
+            flex: 0 0 auto;
+            background-color: transparent;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* === IMAGENS LATERAIS E HISTÓRICAS === */
+        .sidebar img,
+        .history-image img {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        /* Ativa a animação quando visível */
+        .sidebar img.visible,
+        .history-image img.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Configurações específicas da imagem lateral */
+        .sidebar img {
+            width: 400px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid white;
+            image-rendering: -webkit-optimize-contrast;
+            box-shadow:
+                -4px 4px 10px rgba(0, 0, 0, 0.3),
+                0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Hover lateral */
+        .sidebar img:hover {
+            transform: scale(1.05);
+            box-shadow:
+                -8px 8px 20px rgba(0, 0, 0, 0.5),
+                0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Imagem da seção histórica */
+        .history-image {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .history-image img {
+            max-width: 800px;
+            width: 90%;
+            height: auto;
+            border-radius: 12px;
+            border: 2px solid white;
+            box-shadow: -6px 6px 15px rgba(0, 0, 0, 0.4),
+                0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .history-image img:hover {
+            transform: scale(1.05);
+            box-shadow: -8px 8px 20px rgba(0, 0, 0, 0.5),
+                0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* === SEÇÃO DE HISTÓRICO === */
+        .history-section {
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 50px 20px;
+            margin-top: 40px;
+            border-top: 3px solid #e53935;
+        }
+
+        .history-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .history-section p {
+            max-width: 900px;
+            margin: auto;
+            line-height: 1.7rem;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* === NAVEGAÇÃO === */
+        nav {
+            background-color: #c62828;
+            border-radius: 10px;
+            margin: 15px auto 30px;
+            padding: 15px 20px;
+            max-width: 1100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #1e88e5;
+            text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+        }
+
+        nav a.active {
+            color: #001970;
+        }
+
+        /* === SEÇÕES === */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* === RESPONSIVIDADE === */
+        @media (max-width: 1024px) {
+            .sidebar img {
+                width: 350px;
+                height: 350px;
+            }
+
+            .main {
+                padding: 35px;
+                font-size: 1rem;
+            }
+
+            .history-section p {
+                max-width: 95%;
+                font-size: 1rem;
+            }
+
+            .history-image img {
+                width: 85%;
+                max-width: 700px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+                align-items: center;
+                gap: 25px;
+            }
+
+            .sidebar img {
+                width: 280px;
+                height: 280px;
+            }
+
+            .main {
+                width: 100%;
+                padding: 25px;
+                font-size: 0.95rem;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                line-height: 2rem;
+                margin: 1rem 0;
+            }
+
+            .history-section {
+                padding: 40px 15px;
+            }
+
+            .history-image img {
+                width: 100%;
+                max-width: 500px;
+                border-radius: 10px;
+            }
+
+            footer {
+                font-size: 0.9rem;
+                padding: 15px;
+            }
+
+            nav {
+                gap: 30px;
+                padding: 12px 15px;
+            }
+
+            nav a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                font-size: 1rem;
+                padding: 15px;
+            }
+
+            .sidebar img {
+                width: 220px;
+                height: 220px;
+            }
+
+            .main {
+                padding: 20px;
+                font-size: 0.9rem;
+            }
+
+            .history-section p {
+                font-size: 0.95rem;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 12px;
+                border-radius: 0;
+                margin: 0;
+                width: 100%;
+            }
+
+            nav a {
+                font-size: 0.95rem;
+            }
+        }
