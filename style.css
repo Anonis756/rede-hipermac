@@ -326,4 +326,57 @@
             nav a {
                 font-size: 0.95rem;
             }
+
+        }
+        /* HEADER FIX */
+        header {
+            background-color: rgb(4, 4, 99);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 9999;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+        body {
+            padding-top: 80px;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideDown 0.8s ease forwards;
+        }
+
+        .icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            transition: 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon i {
+            font-size: 24px;
+            color: rgb(4, 4, 99);
+        }
+
+        .icon:hover {
+            transform: scale(1.25);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
