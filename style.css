@@ -422,13 +422,6 @@
             padding-top: 60px;
         }
 
-        .divider-home {
-            border: none;
-            border-top: 3px solid #cc0000;
-            width: 80%;
-            margin: 40px auto 20px;
-        }
-
         /* Título PARCEIROS */
         .title-parceiros {
             display: block;
@@ -525,4 +518,154 @@
         .carousel-speed-control button:hover {
             background: #a82121;
             transform: scale(1.05);
+        }
+
+        /* ============================================
+   🔧 CORREÇÃO DE RESPONSIVIDADE GLOBAL
+   ============================================ */
+
+        /* Evita o título PARCEIROS ficar gigante no celular */
+        @media (max-width: 768px) {
+            .title-parceiros {
+                padding: 12px 80px;
+                font-size: 20px;
+                border-radius: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title-parceiros {
+                padding: 10px 40px;
+                font-size: 18px;
+            }
+        }
+
+        /* Mantém o menu organizado no mobile */
+        nav {
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            nav a {
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 8px 0;
+            }
+        }
+
+        /* Ajuste de imagem lateral no mobile */
+        @media (max-width: 480px) {
+            .sidebar img {
+                max-width: 90%;
+                height: auto;
+            }
+        }
+
+        /* Impede que a caixa azul (main) fique espremida no celular */
+        .main {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Ajuste de padding no mobile */
+        @media (max-width: 480px) {
+            .main {
+                padding: 18px;
+            }
+        }
+
+        /* Ajuste do espaçamento do header fixo */
+        @media (max-width: 480px) {
+            body {
+                padding-top: 110px !important;
+            }
+        }
+
+        /* Ajusta o carrossel para caber em telas menores */
+        .partners-carousel {
+            padding-left: 0;
+            padding-right: 0;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            gap: 35px;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-track {
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .carousel-track img {
+                height: 65px;
+            }
+        }
+
+        /* Evita quebra do layout do header no celular */
+        .header-container {
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .header-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
+
+        .extra-divider {
+            border: none;
+            border-top: 3px solid #cc0000;
+            width: 70%;
+            margin: 40px auto 25px;
+        }
+
+        /* ===== 4 IMAGENS MAIORES ===== */
+        .extra-images-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+            margin: 20px auto 50px;
+            flex-wrap: wrap;
+        }
+
+        .extra-images-container img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid #c62828;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: 0.3s ease;
+        }
+
+        .extra-images-container img:hover {
+            transform: scale(1.08);
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 768px) {
+            .extra-images-container img {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .extra-images-container img {
+                width: 130px;
+                height: 130px;
+            }
         }
