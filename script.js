@@ -52,3 +52,96 @@ document.addEventListener("DOMContentLoaded", function () {
         observer.observe(img);
     });
 });
+
+// =====================================
+// 🔥 LOOP SUAVE DO CARROSSEL (sem reset)
+// =====================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const track = document.querySelector('.carousel-track');
+    const btn = document.getElementById('speedBtn');
+
+    // checagens de segurança — se não existir, nada quebra
+    if (!track) {
+        console.warn("Carousel track não encontrado (.carousel-track). Verifique o HTML.");
+        return;
+    }
+    if (!btn) {
+        console.warn("Botão de velocidade não encontrado (id='speedBtn'). Verifique o HTML.");
+        return;
+    }
+
+    // === configurações iniciais ===
+    let speed = 90;               // velocidade inicial: NORMAL
+    let speedBeforePause = 90;    // mantém valor para pausa/retomar
+    let position = 0;
+    let lastTime = null;
+
+    // modo: 1=Lenta, 2=Normal, 3=Rápida
+    // como queremos começar em Normal, sete mode = 2
+    let mode = 2;
+
+    // texto inicial do botão
+    btn.textContent = "Velocidade: Normal ⚡";
+
+    // Função principal de animação (requestAnimationFrame)
+    function animateCarousel(time) {
+        if (lastTime !== null) {
+            const delta = time - lastTime;
+            // move proporcional ao tempo decorrido (px por segundo)
+            position -= (speed * delta) / 1000;
+
+            // largura da metade do conteúdo (supondo que a lista foi duplicada)
+            const width = track.scrollWidth / 2;
+
+            // quando atingir metade, reinicia posição sem salto perceptível
+            if (Math.abs(position) >= width) {
+                position = 0;
+            }
+
+            track.style.transform = `translateX(${position}px)`;
+        }
+
+        lastTime = time;
+        requestAnimationFrame(animateCarousel);
+    }
+
+    requestAnimationFrame(animateCarousel);
+
+    // Pausa no hover (mantém posição e depois retoma)
+    track.addEventListener("mouseover", () => {
+        // guarda velocidade atual e zera
+        speedBeforePause = speed;
+        speed = 0;
+    });
+
+    track.addEventListener("mouseout", () => {
+        // retoma velocidade que estava antes da pausa
+        speed = speedBeforePause;
+    });
+
+    // Controle do botão (Normal -> Rápida -> Lenta -> Normal)
+    btn.addEventListener("click", () => {
+        if (mode === 1) {
+            // Lenta -> Normal
+            speed = 90;
+            speedBeforePause = 90;
+            btn.textContent = "Velocidade: Normal ⚡";
+            mode = 2;
+        } else if (mode === 2) {
+            // Normal -> Rápida
+            speed = 130;
+            speedBeforePause = 130;
+            btn.textContent = "Velocidade: Rápida 🚀";
+            mode = 3;
+        } else {
+            // Rápida -> Lenta
+            speed = 30;
+            speedBeforePause = 30;
+            btn.textContent = "Velocidade: Lenta 🐢";
+            mode = 1;
+        }
+    });
+
+});
