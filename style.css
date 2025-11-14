@@ -326,21 +326,12 @@
             nav a {
                 font-size: 0.95rem;
             }
+        }
 
-        }
-        /* HEADER FIX */
-        header {
-            background-color: rgb(4, 4, 99);
-            padding: 15px 0;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 9999;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-        }
         body {
             padding-top: 80px;
         }
+
         .social-icons {
             display: flex;
             justify-content: center;
@@ -379,4 +370,159 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        .header-top {
+            background: #000066;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            padding: 12px 0;
+            animation: slideHeader 0.6s ease-out;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+        }
+
+        .header-btn {
+            color: white;
+            background: #1e88e5;
+            padding: 8px 18px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            transition: 0.3s ease;
+        }
+
+
+        .header-btn:hover {
+            color: #e53935;
+            transform: scale(1.06);
+        }
+
+        @keyframes slideHeader {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            padding-top: 60px;
+        }
+
+        .divider-home {
+            border: none;
+            border-top: 3px solid #cc0000;
+            width: 80%;
+            margin: 40px auto 20px;
+        }
+
+        /* Título PARCEIROS */
+        .title-parceiros {
+            display: block;
+            margin: 40px auto 40px;
+            padding: 12px 250px;
+            background: linear-gradient(180deg, #c62828 0%, #b71c1c 100%);
+            color: #fff;
+            font-size: 28px;
+            font-weight: 800;
+            text-align: center;
+            border-radius: 50px;
+            width: fit-content;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.28),
+                inset 0 2px 6px rgba(255, 255, 255, 0.25),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+            position: relative;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeSlideUp 0.8s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Carrossel */
+        .partners-carousel {
+            width: 100%;
+            overflow: hidden;
+            padding: 25px 0;
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            align-items: center;
+            gap: 55px;
+            width: max-content;
+            will-change: transform;
+        }
+
+        .carousel-track img {
+            height: 120px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0.95);
+            transition: transform 0.3s ease, filter 0.3s ease;
+            opacity: 0.95;
+        }
+
+        .carousel-track img:hover {
+            transform: scale(1.20);
+            filter: brightness(1.15);
+            opacity: 1;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            .carousel-track img {
+                height: 80px;
+            }
+        }
+
+        .carousel-speed-control {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .carousel-speed-control button {
+            background: #c62828;
+            color: #fff;
+            border: none;
+            padding: 7px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+            transition: 0.2s;
+        }
+
+        .carousel-speed-control button:hover {
+            background: #a82121;
+            transform: scale(1.05);
         }
