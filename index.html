@@ -5,7 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rede Hipermac Casa e Construção - Rede Hipermac</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="lojas.css">
+    <link rel="stylesheet" href="trajetoria.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
@@ -244,20 +246,116 @@
 
         <!-- 🏗️ OUTRAS PÁGINAS -->
         <section id="trajetoria" class="page-section">
-            <h2>Trajetória da Rede Hipermac</h2>
-            <p>Conteúdo sobre a trajetória da rede aparecerá aqui.</p>
-        </section>
+            <!-- HERO ROTATIVO (4 imagens) -->
+            <div class="traj-hero">
+                <img src="images/traj/hero1.jpg" alt="Trajetória imagem 1" class="hero-img active">
+                <img src="images/traj/hero2.jpg" alt="Trajetória imagem 2" class="hero-img">
+                <img src="images/traj/hero3.jpg" alt="Trajetória imagem 3" class="hero-img">
+                <img src="images/traj/hero4.jpg" alt="Trajetória imagem 4" class="hero-img">
+                <div class="hero-overlay">
+                    <!-- opcional: pequeno slogan -->
+                    <div class="hero-text">Nossa trajetória — compromisso com qualidade e associativismo</div>
+                </div>
+            </div>
 
+            <!-- TÍTULO COM FUNDO VERMELHO -->
+            <div class="traj-title-wrap">
+                <h2 class="traj-title">TRAJETÓRIA</h2>
+            </div>
+
+            <!-- GALERIA / CARROSSEL DE TRAJETÓRIA (28 imagens esperadas) -->
+            <div class="traj-gallery">
+                <button class="traj-prev" aria-label="Anterior">&larr;</button>
+                <div class="traj-track-wrap">
+                    <div class="traj-track">
+                        <!-- coloque aqui suas 28 imagens (exemplo com alguns) -->
+                        <a href="#" class="traj-item"><img src="images/traj/1.jpg" alt="Etapa 1"></a>
+                        <a href="#" class="traj-item"><img src="images/traj/2.jpg" alt="Etapa 2"></a>
+                        <a href="#" class="traj-item"><img src="images/traj/3.jpg" alt="Etapa 3"></a>
+                        <!-- ... repita até 28 ... -->
+                    </div>
+                </div>
+                <button class="traj-next" aria-label="Próximo">&rarr;</button>
+            </div>
+
+            <!-- breve descrição (opcional) -->
+            <div class="traj-description">
+                <p>Uma linha do tempo visual com marcos da Rede Hipermac.
+            </div>
+        </section>
+        <!-- 🏬 LISTA DE LOJAS -->
         <section id="lojas" class="page-section">
-            <h2>Nossas Lojas</h2>
-            <p>Informações das lojas associadas.</p>
-        </section>
 
-        <section id="tabloide" class="page-section">
-            <h2>Tabloide de Ofertas</h2>
-            <p>As promoções e campanhas atuais aparecerão aqui.</p>
+            <!-- 🌍 MAPA -->
+            <div class="map-container">
+                <iframe id="mapFrame"
+                    src="https://www.google.com/maps/d/embed?mid=1cVTJmF5JptN7V-MapaGeralAqui"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        
+            <!-- 🏬 LISTA DE LOJAS -->
+            <div class="stores-wrapper">
+        
+                <nav class="stores-list" aria-label="Lista de lojas">
+        
+                    <a href="#" class="store-item active"
+                        data-map="https://www.google.com/maps/place/Nardelli+-27.2670864,-49.7137009">
+                        Agronômica
+                    </a>
+        
+                    <a href="#" class="store-item"
+                        data-map="https://www.google.com/maps/place/SG+-27.3151429,-49.6368984">
+                        Aurora
+                    </a>
+        
+                    <a href="#" class="store-item"
+                        data-map="https://www.google.com/maps/place/Imbuiense+-27.4905273,-49.4187911">
+                        Imbuia
+                    </a>
+        
+                    <details class="store-group">
+                        <summary>Rio do Sul — Cerutti</summary>
+        
+                        <a href="#" class="store-item"
+                            data-map="https://www.google.com/maps/place/Cerutti+1+-27.2368907,-49.6446838">
+                            Laranjeiras
+                        </a>
+        
+                        <a href="#" class="store-item"
+                            data-map="https://www.google.com/maps/place/Cerutti+2+-27.2023995,-49.66593">
+                            Fundo Canoas
+                        </a>
+        
+                        <a href="#" class="store-item"
+                            data-map="https://www.google.com/maps/place/Cerutti+3+-27.1775557,-49.6032953">
+                            Santa Rita
+                        </a>
+                    </details>
+        
+                    <a href="#" class="store-item"
+                        data-map="https://www.google.com/maps/place/Junckes+-26.7760114,-50.0076198">
+                        Santa Terezinha
+                    </a>
+        
+                    <a href="#" class="store-item"
+                        data-map="https://www.google.com/maps/place/Nico+-27.392277,-49.360048">
+                        Vidal Ramos
+                    </a>
+        
+                </nav>
+        
+                <!-- Área para a logo da loja (VOCÊ IRÁ INSERIR A IMAGEM) -->
+                <div class="store-logo-area">
+                    <img id="storeLogo" src="images/rede-hiper-mac_lg.png" alt="Logo da loja selecionada">
+                </div>
+        
+            </div>
+        
         </section>
-
+        
         <section id="blog" class="page-section">
             <h2>Blog Hipermac</h2>
             <p>Dicas, notícias e matérias sobre o setor de construção.</p>
@@ -266,8 +364,44 @@
     </main>
 
     <footer>
-        Formas de contato: WhatsApp, e-mail e outros meios.
+        <div class="footer-info">
+            <a href="mailto:adm@redehipermac.com.br">
+                <i class="fa-solid fa-envelope"></i> adm@redehipermac.com.br
+            </a>
+
+            <a href="mailto:compras@redehipermac.com.br">
+                <i class="fa-solid fa-cart-shopping"></i> compras@redehipermac.com.br
+            </a>
+
+            <a href="mailto:marketing@redehipermac.com.br">
+                <i class="fa-solid fa-bullhorn"></i> marketing@redehipermac.com.br
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-clock"></i>
+                Seg a Qui 07:30 - 18:00 | Sex 07:30 - 17:00
+            </a>
+
+            <a href="https://www.google.com/maps/place/Centro+de+Distribui%C3%A7%C3%A3o+-+Rede+Hipermac/@-27.1782833,-49.6014985,18.42z/data=!4m6!3m5!1s0x94dfba12ffd55083:0xe4ffa2a122b888cd!8m2!3d-27.1789349!4d-49.6024844!16s%2Fg%2F11c1wws5ql?entry=ttu&g_ep=EgoyMDI1MTExMi4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank">
+                <i class="fa-solid fa-location-dot"></i>
+                R. Eugênio Marchi Nº450, Santa Rita - Rio do Sul SC
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-phone"></i> (47) 3525-4033
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-shield-halved"></i> Política de privacidade
+            </a>
+        </div>
+
+        <div class="footer-copy">
+            Todos os direitos reservados © Rede Hipermac 2023
+        </div>
     </footer>
+
     <script src="script.js"></script>
 </body>
 
