@@ -1,0 +1,150 @@
+/* ===== TRAJETÓRIA: HERO ROTATIVO ===== */
+.traj-hero {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 320px;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
+  
+  .traj-hero .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity 900ms ease, transform 900ms ease;
+  }
+  
+  .traj-hero .hero-img.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  /* sobreposição sutil de texto */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    display:flex;
+    align-items:flex-end;
+    justify-content:flex-start;
+    padding: 18px 28px;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.25) 100%);
+  }
+  
+  .hero-text {
+    color: #fff;
+    font-weight:700;
+    font-size: 1rem;
+    background: rgba(0,0,0,0.25);
+    padding: 8px 12px;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+  
+  /* TÍTULO TRAJETÓRIA */
+  .traj-title-wrap {
+    display:flex;
+    justify-content:center;
+    margin-top: 14px;
+    margin-bottom: 18px;
+  }
+  
+  .traj-title {
+    background: linear-gradient(180deg,#c62828,#b71c1c);
+    color: #fff;
+    padding: 14px 30px;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    text-transform:uppercase;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  }
+  
+  /* GALERIA / CARROSSEL HORIZONTAL (manual) */
+  .traj-gallery {
+    max-width: 1200px;
+    margin: 12px auto 28px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding: 6px 10px;
+  }
+  
+  .traj-track-wrap {
+    overflow: hidden;
+    flex:1;
+  }
+  
+  .traj-track {
+    display:flex;
+    gap:14px;
+    transition: transform 400ms ease;
+    will-change: transform;
+    padding: 6px;
+  }
+  
+  .traj-item {
+    display:block;
+    flex: 0 0 auto;
+    width: 220px;
+    height: 150px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    border: 2px solid #fff;
+    background: #fff;
+  }
+  
+  .traj-item img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition: transform 0.3s ease;
+  }
+  
+  .traj-item:hover img { transform: scale(1.06); }
+  
+  /* controles */
+  .traj-prev, .traj-next {
+    background: #001970;
+    color: #fff;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  }
+  
+  .traj-prev:disabled, .traj-next:disabled {
+    opacity:0.45;
+    cursor:not-allowed;
+  }
+  
+  /* responsivo */
+  @media (max-width: 1024px) {
+    .traj-hero { height: 280px; }
+    .traj-item { width: 180px; height: 130px; }
+  }
+  
+  @media (max-width: 768px) {
+    .traj-hero { height: 220px; }
+    .traj-item { width: 150px; height: 110px; }
+    .traj-title { font-size: 1.3rem; padding: 10px 20px; }
+  }
+  
+  @media (max-width: 480px) {
+    .traj-hero { height: 160px; }
+    .traj-gallery { gap:8px; padding:0 6px; }
+    .traj-item { width: 120px; height: 88px; }
+    .traj-prev,.traj-next { padding:8px; font-size:16px; }
+  }
+  
