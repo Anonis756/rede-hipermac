@@ -669,3 +669,56 @@
                 height: 130px;
             }
         }
+
+        /* ===== RODAPÉ COM ÍCONES INTERATIVOS ===== */
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 25px 10px;
+            background: #001a70;
+            color: white;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .footer-info a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer-info i {
+            color: #e53935;
+            /* Vermelho padrão */
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        /* ===== HOVER: ÍCONE FICA BRANCO, TEXTO FICA VERMELHO ===== */
+        .footer-info a:hover {
+            color: #e53935;
+            /* texto fica vermelho */
+        }
+
+        .footer-info a:hover i {
+            color: white;
+            /* Ícone fica branco */
+        }
+
+        /* Texto final */
+        .footer-copy {
+            background: #001a70;
+            color: white;
+            text-align: center;
+            padding: 10px 0 25px;
+            font-size: 13px;
+        }
+
+        
