@@ -145,3 +145,146 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+// ====== TRAJETÓRIA: HERO ROTATIVO (4 imagens) ======
+(function () {
+    const heroImgs = document.querySelectorAll('.traj-hero .hero-img');
+    if (!heroImgs || heroImgs.length === 0) return;
+
+    let current = 0;
+    const total = heroImgs.length;
+    const intervalMs = 4000; // tempo entre trocas (ajuste se quiser)
+
+    function show(index) {
+        heroImgs.forEach((img, i) => {
+            img.classList.toggle('active', i === index);
+        });
+    }
+
+    // ciclo automático
+    let heroTimer = setInterval(() => {
+        current = (current + 1) % total;
+        show(current);
+    }, intervalMs);
+
+    // pausar ao hover (UX)
+    const heroWrap = document.querySelector('.traj-hero');
+    if (heroWrap) {
+        heroWrap.addEventListener('mouseover', () => clearInterval(heroTimer));
+        heroWrap.addEventListener('mouseout', () => {
+            clearInterval(heroTimer);
+            heroTimer = setInterval(() => { current = (current + 1) % total; show(current); }, intervalMs);
+        });
+    }
+})();
+
+// ====== TRAJETÓRIA: CARROSSEL HORIZONTAL MANUAL (suporte teclas / swipe) ======
+(function () {
+    const track = document.querySelector('.traj-track');
+    const prevBtn = document.querySelector('.traj-prev');
+    const nextBtn = document.querySelector('.traj-next');
+    if (!track) return;
+
+    let pos = 0;
+    const step = () => {
+        // largura de um item + gap (aprox)
+        const item = track.querySelector('.traj-item');
+        if (!item) return 220;
+        const style = getComputedStyle(track);
+        const gap = parseInt(style.columnGap || style.gap || 14, 10) || 14;
+        return item.offsetWidth + gap;
+    };
+
+    function updateButtons() {
+        // desativar/ativar conforme limites
+        prevBtn.disabled = pos <= 0;
+        // limite direito: contentWidth - viewport
+        const wrap = document.querySelector('.traj-track-wrap');
+        const maxScroll = Math.max(0, track.scrollWidth - wrap.offsetWidth);
+        nextBtn.disabled = Math.abs(pos) >= maxScroll;
+    }
+
+    prevBtn && prevBtn.addEventListener('click', () => {
+        pos = Math.min(0, pos + step() * 2); // volta 2 itens
+        track.style.transform = `translateX(${pos}px)`;
+        updateButtons();
+    });
+
+    nextBtn && nextBtn.addEventListener('click', () => {
+        const wrap = document.querySelector('.traj-track-wrap');
+        const maxScroll = Math.max(0, track.scrollWidth - wrap.offsetWidth);
+        pos = Math.max(-maxScroll, pos - step() * 2); // avança 2 itens
+        track.style.transform = `translateX(${pos}px)`;
+        updateButtons();
+    });
+
+    // teclado (setas)
+    window.addEventListener('keydown', (e) => {
+        if (document.querySelector('#trajetoria').classList.contains('active')) {
+            if (e.key === 'ArrowRight') nextBtn && nextBtn.click();
+            if (e.key === 'ArrowLeft') prevBtn && prevBtn.click();
+        }
+    });
+
+    // swipe simples para mobile
+    let startX = 0;
+    track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', (e) => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = endX - startX;
+        if (Math.abs(diff) > 40) {
+            if (diff < 0) nextBtn && nextBtn.click();
+            else prevBtn && prevBtn.click();
+        }
+    }, { passive: true });
+
+    // recalcula btns no resize
+    window.addEventListener('resize', () => {
+        // garante que pos não ultrapasse o limite após resize
+        const wrap = document.querySelector('.traj-track-wrap');
+        const maxScroll = Math.max(0, track.scrollWidth - wrap.offsetWidth);
+        pos = Math.max(-maxScroll, Math.min(0, pos));
+        track.style.transform = `translateX(${pos}px)`;
+        updateButtons();
+    });
+
+    // inicial
+    updateButtons();
+})();
+//Loja Script
+document.addEventListener("DOMContentLoaded", () => {
+    const mapFrame = document.getElementById("mapFrame");
+    const storeItems = document.querySelectorAll(".store-item");
+    const storeLogo = document.getElementById("storeLogo");
+
+    // Logos por loja ↓ (VOCÊ IRÁ ALTERAR OS CAMINHOS)
+    const logos = {
+        "Agronômica": "images/neri_lg.png",
+        "Aurora": "images/sg_lg.png",
+        "Imbuia": "images/imbuia_lg.png",
+        "Laranjeiras": "images/cerutti_lg.png",
+        "Fundo Canoas": "images/cerutti_lg.png",
+        "Santa Rita": "images/cerutti_lg.png",
+        "Santa Terezinha": "images/junckes_lg.png",
+        "Vidal Ramos": "images/nico_lg.png"
+    };
+
+    storeItems.forEach(item => {
+        item.addEventListener("click", e => {
+            e.preventDefault();
+
+            // Remover ativo
+            storeItems.forEach(i => i.classList.remove("active"));
+
+            // Ativar clicado
+            item.classList.add("active");
+
+            // Atualizar MAPA
+            mapFrame.src = item.dataset.map;
+
+            // Atualizar LOGO
+            const name = item.textContent.trim();
+            storeLogo.src = logos[name] ?? "images/default_logo.png";
+        });
+    });
+});
