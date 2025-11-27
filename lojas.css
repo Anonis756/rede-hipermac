@@ -11,7 +11,7 @@
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 35px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
 
 .map-container iframe {
@@ -56,21 +56,50 @@
 }
 
 /* GRUPO CERUTTI */
+.store-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* remove a seta */
+.store-group summary::-webkit-details-marker {
+    display: none;
+}
+
 .store-group summary {
+    list-style: none;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    /* <-- ESTA LINHA RESOLVE O PROBLEMA */
+    padding: 12px 16px;
     background: #c62828;
     color: white;
-    padding: 10px 15px;
-    cursor: pointer;
     border-radius: 8px;
     font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+    text-align: center;
 }
 
 .store-group summary:hover {
     background: #a81f1f;
 }
 
+/* subitens */
 .store-group a {
-    margin-top: 8px;
+    display: block;
+    padding: 10px 14px;
+    background: #b71c1c;
+    color: white;
+    border-radius: 6px;
+    margin-top: 6px;
+    text-decoration: none;
+    transition: 0.25s;
+}
+
+.store-group a:hover {
+    background: #8a1414;
 }
 
 /* LOGO DA LOJA */
@@ -79,7 +108,7 @@
     height: 350px;
     border-radius: 12px;
     background: white;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,4 +139,54 @@
         width: 260px;
         height: 260px;
     }
+}
+
+/* ===== Lojas: HERO ROTATIVO ===== */
+.loja-hero {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 320px;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.loja-hero .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity 900ms ease, transform 900ms ease;
+}
+
+.loja-hero .hero-img.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* sobreposição sutil de texto */
+.loja-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 18px 28px;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.25) 100%);
+}
+
+.loja-text {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 8px 12px;
+    border-radius: 8px;
+    pointer-events: none;
 }

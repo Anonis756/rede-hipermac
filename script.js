@@ -1,43 +1,49 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const menuLinks = document.querySelectorAll(".menu-item");
+
+    /* ============================================================
+       1) MENU / SEÇÕES
+    ============================================================ */
+    const menuItems = document.querySelectorAll("nav .menu-item");
     const sections = document.querySelectorAll(".page-section");
 
-    // Mostra o HOME ao carregar
-    const homeSection = document.querySelector("#home");
-    homeSection.classList.add("active");
-    homeSection.style.display = "block";
-
-    // Alternância de seções
-    menuLinks.forEach(link => {
-        link.addEventListener("click", function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute("data-target");
-
-            // Remove ativo de tudo
-            menuLinks.forEach(l => l.classList.remove("active"));
-            sections.forEach(section => {
+    // Função para mostrar apenas a section ativa
+    function showSection(targetId) {
+        sections.forEach(section => {
+            if (section.id === targetId) {
+                section.classList.add("active");
+                section.style.display = "block";
+                section.scrollIntoView({ behavior: 'smooth' });
+            } else {
                 section.classList.remove("active");
                 section.style.display = "none";
-            });
-
-            // Ativa o link e a seção clicada
-            this.classList.add("active");
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                targetSection.classList.add("active");
-                targetSection.style.display = "block";
-
-                // Reobserva imagens da nova seção visível
-                setTimeout(() => {
-                    document.querySelectorAll(`#${targetId} img`).forEach(img => {
-                        observer.observe(img);
-                    });
-                }, 300);
             }
+        });
+    }
+
+    // Inicializa com a section HOME ativa
+    showSection("home");
+    menuItems.forEach(item => {
+        if (item.getAttribute("data-target") === "home") {
+            item.classList.add("active");
+        }
+    });
+
+    // Clique no menu
+    menuItems.forEach(item => {
+        item.addEventListener("click", e => {
+            e.preventDefault();
+            const targetId = item.getAttribute("data-target");
+
+            menuItems.forEach(i => i.classList.remove("active"));
+            item.classList.add("active");
+
+            showSection(targetId);
         });
     });
 
-    // --- Animação das imagens ---
+    /* ============================================================
+       2) ANIMAÇÃO DE IMAGENS - appear on scroll
+    ============================================================ */
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -47,218 +53,129 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }, { threshold: 0.2 });
 
-    // Observar todas as imagens visíveis ao carregar
-    document.querySelectorAll(".page-section.active img").forEach(img => {
-        observer.observe(img);
-    });
-});
+    document.querySelectorAll(".page-section.active img").forEach(img => observer.observe(img));
 
-// =====================================
-// 🔥 LOOP SUAVE DO CARROSSEL (sem reset)
-// =====================================
-
-document.addEventListener("DOMContentLoaded", () => {
-
+    /* ============================================================
+       3) CARROSSEL SUAVE (LOOP INFINITO)
+    ============================================================ */
     const track = document.querySelector('.carousel-track');
-    const btn = document.getElementById('speedBtn');
+    const speedBtn = document.getElementById('speedBtn');
 
-    // checagens de segurança — se não existir, nada quebra
-    if (!track) {
-        console.warn("Carousel track não encontrado (.carousel-track). Verifique o HTML.");
-        return;
-    }
-    if (!btn) {
-        console.warn("Botão de velocidade não encontrado (id='speedBtn'). Verifique o HTML.");
-        return;
-    }
+    if (track && speedBtn) {
+        let speed = 90, speedBeforePause = 90, position = 0, lastTime = null, mode = 2;
+        speedBtn.textContent = "Velocidade: Normal ⚡";
 
-    // === configurações iniciais ===
-    let speed = 90;               // velocidade inicial: NORMAL
-    let speedBeforePause = 90;    // mantém valor para pausa/retomar
-    let position = 0;
-    let lastTime = null;
-
-    // modo: 1=Lenta, 2=Normal, 3=Rápida
-    // como queremos começar em Normal, sete mode = 2
-    let mode = 2;
-
-    // texto inicial do botão
-    btn.textContent = "Velocidade: Normal ⚡";
-
-    // Função principal de animação (requestAnimationFrame)
-    function animateCarousel(time) {
-        if (lastTime !== null) {
-            const delta = time - lastTime;
-            // move proporcional ao tempo decorrido (px por segundo)
-            position -= (speed * delta) / 1000;
-
-            // largura da metade do conteúdo (supondo que a lista foi duplicada)
-            const width = track.scrollWidth / 2;
-
-            // quando atingir metade, reinicia posição sem salto perceptível
-            if (Math.abs(position) >= width) {
-                position = 0;
+        function animateCarousel(time) {
+            if (lastTime !== null) {
+                const delta = time - lastTime;
+                position -= (speed * delta) / 1000;
+                const width = track.scrollWidth / 2;
+                if (Math.abs(position) >= width) position = 0;
+                track.style.transform = `translateX(${position}px)`;
             }
-
-            track.style.transform = `translateX(${position}px)`;
+            lastTime = time;
+            requestAnimationFrame(animateCarousel);
         }
-
-        lastTime = time;
         requestAnimationFrame(animateCarousel);
+
+        track.addEventListener("mouseover", () => { speedBeforePause = speed; speed = 0; });
+        track.addEventListener("mouseout", () => { speed = speedBeforePause; });
+
+        speedBtn.addEventListener("click", () => {
+            if (mode === 1) { speed = 90; mode = 2; speedBtn.textContent = "Velocidade: Normal ⚡"; }
+            else if (mode === 2) { speed = 130; mode = 3; speedBtn.textContent = "Velocidade: Rápida 🚀"; }
+            else { speed = 30; mode = 1; speedBtn.textContent = "Velocidade: Lenta 🐢"; }
+            speedBeforePause = speed;
+        });
     }
 
-    requestAnimationFrame(animateCarousel);
-
-    // Pausa no hover (mantém posição e depois retoma)
-    track.addEventListener("mouseover", () => {
-        // guarda velocidade atual e zera
-        speedBeforePause = speed;
-        speed = 0;
-    });
-
-    track.addEventListener("mouseout", () => {
-        // retoma velocidade que estava antes da pausa
-        speed = speedBeforePause;
-    });
-
-    // Controle do botão (Normal -> Rápida -> Lenta -> Normal)
-    btn.addEventListener("click", () => {
-        if (mode === 1) {
-            // Lenta -> Normal
-            speed = 90;
-            speedBeforePause = 90;
-            btn.textContent = "Velocidade: Normal ⚡";
-            mode = 2;
-        } else if (mode === 2) {
-            // Normal -> Rápida
-            speed = 130;
-            speedBeforePause = 130;
-            btn.textContent = "Velocidade: Rápida 🚀";
-            mode = 3;
-        } else {
-            // Rápida -> Lenta
-            speed = 30;
-            speedBeforePause = 30;
-            btn.textContent = "Velocidade: Lenta 🐢";
-            mode = 1;
-        }
-    });
-
-});
-
-// ====== TRAJETÓRIA: HERO ROTATIVO (4 imagens) ======
-(function () {
+    /* ============================================================
+       4) HERO ROTATIVO TRAJETÓRIA
+    ============================================================ */
     const heroImgs = document.querySelectorAll('.traj-hero .hero-img');
-    if (!heroImgs || heroImgs.length === 0) return;
-
-    let current = 0;
-    const total = heroImgs.length;
-    const intervalMs = 4000; // tempo entre trocas (ajuste se quiser)
-
-    function show(index) {
-        heroImgs.forEach((img, i) => {
-            img.classList.toggle('active', i === index);
-        });
-    }
-
-    // ciclo automático
-    let heroTimer = setInterval(() => {
-        current = (current + 1) % total;
-        show(current);
-    }, intervalMs);
-
-    // pausar ao hover (UX)
-    const heroWrap = document.querySelector('.traj-hero');
-    if (heroWrap) {
-        heroWrap.addEventListener('mouseover', () => clearInterval(heroTimer));
-        heroWrap.addEventListener('mouseout', () => {
-            clearInterval(heroTimer);
-            heroTimer = setInterval(() => { current = (current + 1) % total; show(current); }, intervalMs);
-        });
-    }
-})();
-
-// ====== TRAJETÓRIA: CARROSSEL HORIZONTAL MANUAL (suporte teclas / swipe) ======
-(function () {
-    const track = document.querySelector('.traj-track');
-    const prevBtn = document.querySelector('.traj-prev');
-    const nextBtn = document.querySelector('.traj-next');
-    if (!track) return;
-
-    let pos = 0;
-    const step = () => {
-        // largura de um item + gap (aprox)
-        const item = track.querySelector('.traj-item');
-        if (!item) return 220;
-        const style = getComputedStyle(track);
-        const gap = parseInt(style.columnGap || style.gap || 14, 10) || 14;
-        return item.offsetWidth + gap;
-    };
-
-    function updateButtons() {
-        // desativar/ativar conforme limites
-        prevBtn.disabled = pos <= 0;
-        // limite direito: contentWidth - viewport
-        const wrap = document.querySelector('.traj-track-wrap');
-        const maxScroll = Math.max(0, track.scrollWidth - wrap.offsetWidth);
-        nextBtn.disabled = Math.abs(pos) >= maxScroll;
-    }
-
-    prevBtn && prevBtn.addEventListener('click', () => {
-        pos = Math.min(0, pos + step() * 2); // volta 2 itens
-        track.style.transform = `translateX(${pos}px)`;
-        updateButtons();
-    });
-
-    nextBtn && nextBtn.addEventListener('click', () => {
-        const wrap = document.querySelector('.traj-track-wrap');
-        const maxScroll = Math.max(0, track.scrollWidth - wrap.offsetWidth);
-        pos = Math.max(-maxScroll, pos - step() * 2); // avança 2 itens
-        track.style.transform = `translateX(${pos}px)`;
-        updateButtons();
-    });
-
-    // teclado (setas)
-    window.addEventListener('keydown', (e) => {
-        if (document.querySelector('#trajetoria').classList.contains('active')) {
-            if (e.key === 'ArrowRight') nextBtn && nextBtn.click();
-            if (e.key === 'ArrowLeft') prevBtn && prevBtn.click();
+    if (heroImgs.length > 0) {
+        let current = 0, total = heroImgs.length, intervalMs = 4000;
+        function show(i) { heroImgs.forEach((img, idx) => img.classList.toggle('active', idx === i)); }
+        let heroTimer = setInterval(() => { current = (current + 1) % total; show(current); }, intervalMs);
+        const heroWrap = document.querySelector('.traj-hero');
+        if (heroWrap) {
+            heroWrap.addEventListener('mouseover', () => clearInterval(heroTimer));
+            heroWrap.addEventListener('mouseout', () => {
+                clearInterval(heroTimer);
+                heroTimer = setInterval(() => { current = (current + 1) % total; show(current); }, intervalMs);
+            });
         }
-    });
+    }
 
-    // swipe simples para mobile
-    let startX = 0;
-    track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
-    track.addEventListener('touchend', (e) => {
-        const endX = e.changedTouches[0].clientX;
-        const diff = endX - startX;
-        if (Math.abs(diff) > 40) {
-            if (diff < 0) nextBtn && nextBtn.click();
-            else prevBtn && prevBtn.click();
+    /* ============================================================
+       5) HERO ROTATIVO LOJAS
+    ============================================================ */
+    (function () {
+        const imgs = document.querySelectorAll('.loja-hero .hero-img');
+        if (imgs.length === 0) return;
+        let index = 0, total = imgs.length, intervalMs = 4000;
+        function show(i) { imgs.forEach((img, idx) => img.classList.toggle('active', idx === i)); }
+        let timer = setInterval(() => { index = (index + 1) % total; show(index); }, intervalMs);
+        const wrap = document.querySelector('.loja-hero');
+        if (wrap) {
+            wrap.addEventListener('mouseover', () => clearInterval(timer));
+            wrap.addEventListener('mouseout', () => {
+                clearInterval(timer);
+                timer = setInterval(() => { index = (index + 1) % total; show(index); }, intervalMs);
+            });
         }
-    }, { passive: true });
+    })();
 
-    // recalcula btns no resize
-    window.addEventListener('resize', () => {
-        // garante que pos não ultrapasse o limite após resize
-        const wrap = document.querySelector('.traj-track-wrap');
-        const maxScroll = Math.max(0, track.scrollWidth - wrap.offsetWidth);
-        pos = Math.max(-maxScroll, Math.min(0, pos));
-        track.style.transform = `translateX(${pos}px)`;
+    /* ============================================================
+       6) TRAJETÓRIA CARROSSEL MANUAL
+    ============================================================ */
+    (function () {
+        const track = document.querySelector('.traj-track');
+        const prevBtn = document.querySelector('.traj-prev');
+        const nextBtn = document.querySelector('.traj-next');
+        if (!track) return;
+
+        let pos = 0;
+        const step = () => {
+            const item = track.querySelector('.traj-item');
+            if (!item) return 220;
+            const style = getComputedStyle(track);
+            const gap = parseInt(style.columnGap || style.gap || 14, 10);
+            return item.offsetWidth + gap;
+        };
+
+        function updateButtons() {
+            const wrap = document.querySelector('.traj-track-wrap');
+            const maxScroll = Math.max(0, track.scrollWidth - wrap.offsetWidth);
+            prevBtn.disabled = pos >= 0;
+            nextBtn.disabled = Math.abs(pos) >= maxScroll;
+        }
+
+        prevBtn?.addEventListener('click', () => { pos = Math.min(0, pos + step() * 2); track.style.transform = `translateX(${pos}px)`; updateButtons(); });
+        nextBtn?.addEventListener('click', () => { const wrap = document.querySelector('.traj-track-wrap'); const maxScroll = Math.max(0, track.scrollWidth - wrap.offsetWidth); pos = Math.max(-maxScroll, pos - step() * 2); track.style.transform = `translateX(${pos}px)`; updateButtons(); });
+
+        let startX = 0;
+        track.addEventListener("touchstart", e => startX = e.touches[0].clientX, { passive: true });
+        track.addEventListener("touchend", e => {
+            const diff = e.changedTouches[0].clientX - startX;
+            if (Math.abs(diff) > 40) { diff < 0 ? nextBtn?.click() : prevBtn?.click(); }
+        }, { passive: true });
+
+        window.addEventListener("resize", () => {
+            const wrap = document.querySelector('.traj-track-wrap');
+            const maxScroll = Math.max(0, track.scrollWidth - wrap.offsetWidth);
+            pos = Math.max(-maxScroll, Math.min(0, pos));
+            track.style.transform = `translateX(${pos}px)`;
+            updateButtons();
+        });
+
         updateButtons();
-    });
+    })();
 
-    // inicial
-    updateButtons();
-})();
-//Loja Script
-document.addEventListener("DOMContentLoaded", () => {
-    const mapFrame = document.getElementById("mapFrame");
-    const storeItems = document.querySelectorAll(".store-item");
-    const storeLogo = document.getElementById("storeLogo");
-
-    // Logos por loja ↓ (VOCÊ IRÁ ALTERAR OS CAMINHOS)
-    const logos = {
+    /* ============================================================
+       7) TROCA DE LOGOS LOJAS
+    ============================================================ */
+    const logoMap = {
         "Agronômica": "images/neri_lg.png",
         "Aurora": "images/sg_lg.png",
         "Imbuia": "images/imbuia_lg.png",
@@ -269,22 +186,101 @@ document.addEventListener("DOMContentLoaded", () => {
         "Vidal Ramos": "images/nico_lg.png"
     };
 
+    const storeLogo = document.getElementById("storeLogo");
+    const storeItems = document.querySelectorAll(".store-item");
+
     storeItems.forEach(item => {
         item.addEventListener("click", e => {
             e.preventDefault();
-
-            // Remover ativo
-            storeItems.forEach(i => i.classList.remove("active"));
-
-            // Ativar clicado
+            document.querySelectorAll(".store-item.active").forEach(el => el.classList.remove("active"));
             item.classList.add("active");
-
-            // Atualizar MAPA
-            mapFrame.src = item.dataset.map;
-
-            // Atualizar LOGO
             const name = item.textContent.trim();
-            storeLogo.src = logos[name] ?? "images/default_logo.png";
+            storeLogo.src = logoMap[name] || "images/rede-hiper-mac_lg.png";
         });
     });
+
+    /* ============================================================
+       8) APRESENTAÇÃO / SLIDES
+    ============================================================ */
+    (function () {
+        const track = document.querySelector('.pres-track');
+        const slides = document.querySelectorAll('.pres-slide');
+        const btnPrev = document.querySelector('.pres-prev');
+        const btnNext = document.querySelector('.pres-next');
+        const indicatorsWrap = document.querySelector('.pres-indicators');
+        if (!track || slides.length === 0) return;
+
+        let current = 0, total = slides.length, interval = 5000, timer = null;
+
+        function buildIndicators() {
+            if (!indicatorsWrap) return;
+            indicatorsWrap.innerHTML = "";
+            for (let i = 0; i < total; i++) {
+                const b = document.createElement("button");
+                if (i === 0) b.classList.add("active");
+                b.addEventListener("click", () => go(i));
+                indicatorsWrap.appendChild(b);
+            }
+        }
+
+        function updateIndicators() {
+            if (!indicatorsWrap) return;
+            Array.from(indicatorsWrap.children).forEach((btn, i) => btn.classList.toggle("active", i === current));
+        }
+
+        function go(i) { current = (i + total) % total; track.style.transform = `translateX(${-current * 100}%)`; updateIndicators(); }
+        function next() { go(current + 1); }
+        function prev() { go(current - 1); }
+        function start() { stop(); timer = setInterval(next, interval); }
+        function stop() { if (timer) clearInterval(timer); }
+
+        btnNext?.addEventListener("click", () => { next(); start(); });
+        btnPrev?.addEventListener("click", () => { prev(); start(); });
+
+        const viewport = document.querySelector(".pres-viewport");
+        if (viewport) {
+            viewport.addEventListener("mouseover", stop);
+            viewport.addEventListener("mouseout", start);
+        }
+
+        buildIndicators();
+        go(0);
+        start();
+    })();
+
+    /* ============================================================
+       9) TABLOID CARROSSEL
+    ============================================================ */
+    (function () {
+        const pages = document.querySelectorAll(".tabloid-page");
+        const btnPrev = document.querySelector(".tabloid-prev");
+        const btnNext = document.querySelector(".tabloid-next");
+        const indicatorsContainer = document.querySelector('.tabloid-indicators');
+        if (pages.length === 0) return;
+
+        let currentIndex = 0;
+
+        // Cria bolinhas
+        pages.forEach((_, i) => {
+            const dot = document.createElement('span');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => { currentIndex = i; updateSlide(); });
+            indicatorsContainer.appendChild(dot);
+        });
+
+        const indicators = indicatorsContainer.querySelectorAll('span');
+
+        function updateSlide() {
+            pages.forEach(p => p.classList.remove('active'));
+            pages[currentIndex].classList.add('active');
+            indicators.forEach(dot => dot.classList.remove('active'));
+            indicators[currentIndex].classList.add('active');
+        }
+
+        btnNext.addEventListener('click', () => { currentIndex = (currentIndex + 1) % pages.length; updateSlide(); });
+        btnPrev.addEventListener('click', () => { currentIndex = (currentIndex - 1 + pages.length) % pages.length; updateSlide(); });
+
+        updateSlide();
+    })();
+
 });

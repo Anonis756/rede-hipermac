@@ -721,4 +721,12 @@
             font-size: 13px;
         }
 
-        
+        /* Esconde todas as sections inicialmente */
+        .page-section {
+            display: none;
+        }
+
+        /* Mostra apenas a section ativa */
+        .page-section.active {
+            display: block;
+        }

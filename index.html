@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="lojas.css">
     <link rel="stylesheet" href="trajetoria.css">
+    <link rel="stylesheet" href="tabloid.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
@@ -22,7 +23,7 @@
         <a href="#" class="menu-item active" data-target="home">HOME</a>
         <a href="#" class="menu-item" data-target="trajetoria">TRAJETÓRIA</a>
         <a href="#" class="menu-item" data-target="lojas">LOJAS</a>
-        <a href="#" class="menu-item" data-target="tabloide">TABLOIDE DE OFERTAS</a>
+        <a href="#" class="menu-item" data-target="tabloid">TABLOIDE DE OFERTAS</a>
         <a href="#" class="menu-item" data-target="blog">BLOG</a>
         <li class="social-icons">
             <a href="https://www.facebook.com/redehipermac/" target="_blank" class="icon fb">
@@ -141,7 +142,7 @@
                         <img src="images/ceramfix_lg.jpg" alt="Ceramfix" title="Ceramfix">
                     </a>
                     <a href="https://www.lotuscomercial.com.br/" target="_blank">
-                        <img src="images/lotuscomercial_lg.png" alt="Lótus Comercial" title="Lotus">>
+                        <img src="images/lotuscomercial_lg.png" alt="Lótus Comercial" title="Lotus">
                     </a>
                     <a href="https://vedacit.com.br/" target="_blank">
                         <img src="images/vedacit_lg.jpg" alt="Vedacit" title="Vedacit">
@@ -247,115 +248,208 @@
         <!-- 🏗️ OUTRAS PÁGINAS -->
         <section id="trajetoria" class="page-section">
             <!-- HERO ROTATIVO (4 imagens) -->
-            <div class="traj-hero">
-                <img src="images/traj/hero1.jpg" alt="Trajetória imagem 1" class="hero-img active">
-                <img src="images/traj/hero2.jpg" alt="Trajetória imagem 2" class="hero-img">
-                <img src="images/traj/hero3.jpg" alt="Trajetória imagem 3" class="hero-img">
-                <img src="images/traj/hero4.jpg" alt="Trajetória imagem 4" class="hero-img">
+            <div class="traj-hero" aria-hidden="false">
+                <img src="images/traj_img1.png" alt="Trajetória imagem 1" class="hero-img active" loading="lazy">
+                <img src="images/traj_img2.jfif" alt="Trajetória imagem 2" class="hero-img" loading="lazy">
+                <img src="images/traj_img3.png" alt="Trajetória imagem 3" class="hero-img" loading="lazy">
+                <img src="images/traj_img4.jpg" alt="Trajetória imagem 4" class="hero-img" loading="lazy">
                 <div class="hero-overlay">
-                    <!-- opcional: pequeno slogan -->
                     <div class="hero-text">Nossa trajetória — compromisso com qualidade e associativismo</div>
+                </div>
+                <div class="hero-controls">
+                    <button class="hero-prev" aria-label="Imagem anterior">‹</button>
+                    <button class="hero-next" aria-label="Próxima imagem">›</button>
                 </div>
             </div>
 
             <!-- TÍTULO COM FUNDO VERMELHO -->
             <div class="traj-title-wrap">
-                <h2 class="traj-title">TRAJETÓRIA</h2>
+                <h2 class="traj-title">Trajetória Rede Hipermac</h2>
             </div>
 
-            <!-- GALERIA / CARROSSEL DE TRAJETÓRIA (28 imagens esperadas) -->
-            <div class="traj-gallery">
-                <button class="traj-prev" aria-label="Anterior">&larr;</button>
-                <div class="traj-track-wrap">
-                    <div class="traj-track">
-                        <!-- coloque aqui suas 28 imagens (exemplo com alguns) -->
-                        <a href="#" class="traj-item"><img src="images/traj/1.jpg" alt="Etapa 1"></a>
-                        <a href="#" class="traj-item"><img src="images/traj/2.jpg" alt="Etapa 2"></a>
-                        <a href="#" class="traj-item"><img src="images/traj/3.jpg" alt="Etapa 3"></a>
-                        <!-- ... repita até 28 ... -->
+            <!-- CARROSSEL TIPO "PRESENTATION" (uma imagem grande por vez) -->
+            <div class="traj-presentation">
+                <button class="pres-prev" aria-label="Anterior slide">◀</button>
+
+                <div class="pres-viewport">
+                    <div class="pres-track">
+                        <!-- COLOQUE AQUI SUAS 28 IMAGENS COMO <div class="pres-slide"><img ...></div>
+                       Exemplo com 4 — duplique/adicione até 28 -->
+                        <div class="pres-slide">
+                            <img src="images/img_teste.jfif" alt="Etapa 1" loading="lazy">
+                        </div>
+                        <div class="pres-slide">
+                            <img src="images/img_teste2.jfif" alt="Etapa 2" loading="lazy">
+                        </div>
+                        <div class="pres-slide">
+                            <img src="images/presentation/03.jpg" alt="Etapa 3" loading="lazy">
+                        </div>
+                        <div class="pres-slide">
+                            <img src="images/presentation/04.jpg" alt="Etapa 4" loading="lazy">
+                        </div>
+                        <!-- ... até 28 -->
                     </div>
                 </div>
-                <button class="traj-next" aria-label="Próximo">&rarr;</button>
+
+                <button class="pres-next" aria-label="Próximo slide">▶</button>
             </div>
+
+            <!-- indicadores (bolinhas) -->
+            <div class="pres-indicators" role="tablist" aria-label="Indicadores da apresentação"></div>
 
             <!-- breve descrição (opcional) -->
             <div class="traj-description">
-                <p>Uma linha do tempo visual com marcos da Rede Hipermac.
+                <p>Uma linha do tempo visual com marcos da Rede Hipermac.</p>
             </div>
         </section>
+
         <!-- 🏬 LISTA DE LOJAS -->
         <section id="lojas" class="page-section">
 
-            <!-- 🌍 MAPA -->
-            <div class="map-container">
-                <iframe id="mapFrame"
-                    src="https://www.google.com/maps/d/embed?mid=1cVTJmF5JptN7V-MapaGeralAqui"
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    allowfullscreen>
-                </iframe>
+            <!-- HERO ROTATIVO -->
+            <div class="loja-hero">
+                <img src="images/cerruti_logo_lojas.png" class="hero-img active">
+                <img src="images/sg_logo_lojas.jfif" class="hero-img">
+                <img src="images/nico_logo_lojas.jpg" class="hero-img">
+                <div class="hero-overlay">
+                    <div class="hero-text">Nossas lojas - Venha nos conhecer</div>
+                </div>
             </div>
-        
-            <!-- 🏬 LISTA DE LOJAS -->
+
+            <!-- TÍTULO -->
+            <div class="traj-title-wrap">
+                <h2 class="traj-title">Veja qual loja está mais perto de você!</h2>
+            </div>
+
+            <!-- CONTAINER PRINCIPAL -->
             <div class="stores-wrapper">
-        
+
+                <!-- MENU DE LOJAS -->
                 <nav class="stores-list" aria-label="Lista de lojas">
-        
+
                     <a href="#" class="store-item active"
-                        data-map="https://www.google.com/maps/place/Nardelli+-27.2670864,-49.7137009">
+                        data-map="https://www.google.com/maps/place/Nardelli+-27.2670864,-49.7137009"
+                        data-logo="images/logos/agronomica.png">
                         Agronômica
                     </a>
-        
+
                     <a href="#" class="store-item"
-                        data-map="https://www.google.com/maps/place/SG+-27.3151429,-49.6368984">
+                        data-map="https://www.google.com/maps/place/SG+-27.3151429,-49.6368984"
+                        data-logo="images/logos/aurora.png">
                         Aurora
                     </a>
-        
+
                     <a href="#" class="store-item"
-                        data-map="https://www.google.com/maps/place/Imbuiense+-27.4905273,-49.4187911">
+                        data-map="https://www.google.com/maps/place/Imbuiense+-27.4905273,-49.4187911"
+                        data-logo="images/logos/imbuia.png">
                         Imbuia
                     </a>
-        
+
                     <details class="store-group">
                         <summary>Rio do Sul — Cerutti</summary>
-        
+
                         <a href="#" class="store-item"
-                            data-map="https://www.google.com/maps/place/Cerutti+1+-27.2368907,-49.6446838">
+                            data-map="https://www.google.com/maps/place/Cerutti+1+-27.2368907,-49.6446838"
+                            data-logo="images/logos/cerutti1.png">
                             Laranjeiras
                         </a>
-        
+
                         <a href="#" class="store-item"
-                            data-map="https://www.google.com/maps/place/Cerutti+2+-27.2023995,-49.66593">
+                            data-map="https://www.google.com/maps/place/Cerutti+2+-27.2023995,-49.66593"
+                            data-logo="images/logos/cerutti2.png">
                             Fundo Canoas
                         </a>
-        
+
                         <a href="#" class="store-item"
-                            data-map="https://www.google.com/maps/place/Cerutti+3+-27.1775557,-49.6032953">
+                            data-map="https://www.google.com/maps/place/Cerutti+3+-27.1775557,-49.6032953"
+                            data-logo="images/logos/cerutti3.png">
                             Santa Rita
                         </a>
                     </details>
-        
+
                     <a href="#" class="store-item"
-                        data-map="https://www.google.com/maps/place/Junckes+-26.7760114,-50.0076198">
+                        data-map="https://www.google.com/maps/place/Junckes+-26.7760114,-50.0076198"
+                        data-logo="images/logos/junckes.png">
                         Santa Terezinha
                     </a>
-        
+
                     <a href="#" class="store-item"
-                        data-map="https://www.google.com/maps/place/Nico+-27.392277,-49.360048">
+                        data-map="https://www.google.com/maps/place/Nico+-27.392277,-49.360048"
+                        data-logo="images/logos/vidalramos.png">
                         Vidal Ramos
                     </a>
-        
+
                 </nav>
-        
-                <!-- Área para a logo da loja (VOCÊ IRÁ INSERIR A IMAGEM) -->
+
+                <!-- LOGO DA LOJA -->
                 <div class="store-logo-area">
                     <img id="storeLogo" src="images/rede-hiper-mac_lg.png" alt="Logo da loja selecionada">
                 </div>
-        
+
+                <!-- MAPA -->
+                <div class="map-area">
+                    <iframe id="storeMap"
+                        src="https://www.google.com/maps/d/u/0/embed?mid=1DBl6KZiXhl4hfr0LmLgmjh6yR4nDAKg&ehbc=2E312F&noprof=1"
+                        width="100%" height="480">
+                    </iframe>
+                </div>
+
             </div>
-        
         </section>
-        
+
+        <section id="tabloid" class="page-section">
+            <div class="tabloid-container">
+
+                <!-- CARROSSEL DO TABLOID -->
+                <div class="tabloid-carousel-wrapper">
+                    <div class="tabloid-carousel">
+                        <div class="tabloid-track">
+                            <img src="images/tabloid_img.jfif" class="tabloid-page active">
+                            <img src="images/tabloid_img2.png" class="tabloid-page">
+                            <img src="images/tabloid/pagina3.jpg" class="tabloid-page">
+                        </div>
+
+                        <!-- Botões -->
+                        <button class="tabloid-prev">&#10094;</button>
+                        <button class="tabloid-next">&#10095;</button>
+                    </div>
+                    <div class="tabloid-indicators"></div>
+                </div>
+
+                <!-- TEXTO AO LADO -->
+                <div class="tabloid-text">
+                    <p>
+                        Bem-vindo ao nosso tabloide virtual. Aqui, você encontrará tudo o que precisa para transformar
+                        sua
+                        casa em um lar dos sonhos, com as últimas tendências em decoração, iluminação, mobiliário,
+                        materiais
+                        de construção e muito mais.
+                    </p>
+                    <p>
+                        Nossa equipe de especialistas em casa e construção está sempre pesquisando as melhores marcas e
+                        produtos para ajudá-lo a transformar sua casa. Se você está planejando uma reforma completa, uma
+                        renovação parcial ou apenas quer dar um toque final na decoração, nós temos tudo o que você
+                        precisa.
+                        De pequenas mudanças a grandes reformas, nossa equipe está aqui para ajudá-lo a transformar sua
+                        casa
+                        em um espaço bonito e funcional.
+                    </p>
+                    <p>
+                        Não perca nossas promoções e descontos exclusivos, para que você possa economizar enquanto
+                        transforma
+                        sua casa em um lar dos sonhos. Navegue em nosso tabloide virtual e comece a planejar sua próxima
+                        reforma ou projeto de decoração hoje mesmo.
+                    </p>
+                    <p>
+                        Confira qual das lojas está mais próxima a você e aproveite.
+                    </p>
+                    <p><strong><a href="#" target="_blank">Rede Hipermac</a>, projetando sonhos, construindo realidade!</strong></p>
+                </div>
+
+            </div>
+        </section>
+
+
         <section id="blog" class="page-section">
             <h2>Blog Hipermac</h2>
             <p>Dicas, notícias e matérias sobre o setor de construção.</p>
